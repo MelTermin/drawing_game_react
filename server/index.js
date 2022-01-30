@@ -46,8 +46,6 @@ io.on('connection',(socket)=> {
 
 
   
-    // // welcome the user
-    // socket.emit("welcome", `Welcome ${user}!`);
     // // inform the other users of a new player
     // socket.broadcast.emit("welcome", `${user} has joined the game.`);
   });

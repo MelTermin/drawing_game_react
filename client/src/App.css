@@ -141,6 +141,12 @@ input {
   font-weight: 700;
   font-size: 25px;
 }
+
+.palette-div input {
+  margin-left: 620px;
+  width: 200px;
+  height: 40px;
+}
 /* Game container */
 .game-container {
   border: 2px solid fuchsia;
