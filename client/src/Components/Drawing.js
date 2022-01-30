@@ -15,13 +15,7 @@ function Drawing() {
   return <div>
             <div className='drawing container'>
               <CanvasDraw  canvasWidth={1500} canvasHeight={600}  ref = {savedCanvas} />
-              {/* <button
-            onClick={() => {
-              CanvasDraw.clear();
-            }}
-          >
-            Clear
-          </button> */}
+              <button>Clear</button>
               <button onClick={sendDrawingHandler} >Send</button>
             </div>
 
