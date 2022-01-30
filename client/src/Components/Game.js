@@ -11,7 +11,7 @@ function Game() {
             <div className='game-views'>
                 Viewing of the drawn picture
             </div>
-            <div className='game-views'>Chatting</div>
+            <div className='game-views'>Chatting area</div>
 
         </div>;
 }
