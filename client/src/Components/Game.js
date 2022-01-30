@@ -9,7 +9,7 @@ function Game() {
   return <div className='game-container'>
             
             <div className='game-views'>
-                Viewing of the drawn picturee
+                Viewing of the drawn picture
             </div>
             <div className='game-views'>Chatting</div>
 
