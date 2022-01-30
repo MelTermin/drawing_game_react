@@ -20,6 +20,8 @@ let players = [];
 let gameStarted=false;
 let mode= null;
 let randomWord=null;
+let drawingCanvas=null;
+let points=0;
 
 //run when a client connects
 io.on('connection',(socket)=> {
@@ -29,7 +31,7 @@ io.on('connection',(socket)=> {
     
     //Taking the user who entered their name and put it in a state in the frontend as well
     //This also helps the define the drawer 
-    const user= {name:username, id:socket.id, isAdmin:!gameStarted}
+    const user= {name:username, id:socket.id, isAdmin:!gameStarted ,point:points}
     
     // each player is pushed into the players list
     players.push(user);
