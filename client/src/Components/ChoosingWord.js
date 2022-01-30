@@ -16,19 +16,21 @@ function ChoosingWord({difficultyLevel,name,setIsClicked}) {
     console.log(value,"from word choosing component")
     socket.emit("mode", (randomWord)=> {
       setWord(value)
-      history.push("/drawing")
+      history.push(`/drawing?word=${value}`)
     })
 
   }
   return <div className='word-choosing container'>
           <div>
-            <p>Hello, {name}! You have choosen {difficultyLevel.charAt(0).toLowerCase()+ difficultyLevel.slice(1)} word as a level</p>
+            <p>{name} you have choosen {difficultyLevel} word as a level</p>
           </div>
           <div className='word'>
             <p>Please choose a word</p>
-            {shuffledWords.splice(0,3).map((item, i) => (
+            {shuffledWords.splice(0,5).map((item, i) => (
                   <div key={i}>
-                      <button onClick={(e)=>handleWord(e)}>{item}</button>   
+                       <div className='word-btn-container'>
+                        <button className='btn' onClick={(e)=>handleWord(e)}>{item}</button>  
+                      </div> 
                   </div>
             ))}
           </div>

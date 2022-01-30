@@ -32,14 +32,25 @@ function Level({location}) {
 
    
   }
-  const handleLevelMedium= () => {
-  
-
-    
+  const handleLevelMedium= (e) => {
+      //taking the buttons innerText value and assing it to a state
+      let value=e.target.innerText
+      //setting the difficulty level on serverside
+      socket.emit("mode", (mode)=> {
+        setDifficultyLevel(value)
+      })
+      setIsClicked(true);
   }
-  const handleLevelHard= () => {
+  const handleLevelHard= (e) => {
   
-
+          //taking the buttons innerText value and assing it to a state
+          let value=e.target.innerText
+          //setting the difficulty level on serverside
+          socket.emit("mode", (mode)=> {
+            setDifficultyLevel(value)
+          })
+          setIsClicked(true);
+    
 
    
   }
@@ -53,10 +64,12 @@ function Level({location}) {
                   </div>
                   <div className='level-choosing'>
                     <p>Please choose a difficulty level for your word</p>
-                      <button onClick={(e) =>handleLevelEasy(e)}>Easy</button>
-                      
-                      <button onClick={handleLevelMedium}>Medium</button>
-                      <button onClick = {handleLevelHard} >Hard</button>
+                      <div className='level-btn-container'>
+                        <button className='btn' onClick={(e) =>handleLevelEasy(e)}>Easy</button>
+                        <button className='btn' onClick={(e) =>handleLevelMedium(e)}>Medium</button>
+                        <button className='btn' onClick = {(e) =>handleLevelHard(e)} >Hard</button>
+                      </div>
+                     
                   </div>  
                 </div>): (<ChoosingWord difficultyLevel = {difficultyLevel} name= {name} setIsClicked={setIsClicked}/>) }
 
