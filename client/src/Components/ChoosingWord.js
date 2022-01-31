@@ -12,13 +12,12 @@ function ChoosingWord({difficultyLevel,name,setIsClicked}) {
   const shuffledWords= words.sort(() => Math.random() - 0.5)
 
   const handleWord= (e) => {
-    let value=e.target.innerText
-    console.log(value,"from word choosing component")
-    socket.emit("mode", (randomWord)=> {
-      setWord(value)
-      history.push(`/drawing?word=${value}`)
-    })
-
+       
+      setWord(e.target.innerText)
+      let wordText=e.target.innerText
+      socket.emit("randomWord", e.target.innerText)
+      history.push(`/drawing?word=${wordText}`)
+       
   }
   return <div className='word-choosing container'>
           <div>

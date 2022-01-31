@@ -18,10 +18,11 @@ const io = new Server(server, {
 
 let players = [];
 let gameStarted=false;
-let mode= null;
+let mode=null;
 let randomWord=null;
-let drawingCanvas=null;
+let image;
 let points=0;
+
 
 //run when a client connects
 io.on('connection',(socket)=> {
@@ -39,27 +40,36 @@ io.on('connection',(socket)=> {
     if(!gameStarted) {
       gameStarted=true
     }
-    // console.log(socket)
-    console.log(players,"players")
+    
+    //console.log(players,"players")
     //sending user and players to the frontend
     callback(players,user)
 
 
-  
-    // // inform the other users of a new player
-    // socket.broadcast.emit("welcome", `${user} has joined the game.`);
+
   });
 
   //setting the mode
-  socket.on("mode",(callback) => {
-    callback(mode)
+  socket.on("mode", (data)=> {
+    mode=data
+    //console.log(data,"mode server")
   })
 
   //setting the randomWord
 
-  socket.on("randomWord",(callback) => {
-    callback(randomWord)
+  socket.on("randomWord", (data)=> {
+    randomWord=data
+    //console.log(data,"word server")
   })
+
+  socket.on("picture", (data)=> {
+    image=data
+    //console.log(data,"image server")
+    socket.broadcast.emit("picture", image)
+  })
+
+  
+
    
   
 });

@@ -21,37 +21,31 @@ function Level({location}) {
 
 
   const handleLevelEasy= (e) => {
+  
     //taking the buttons innerText value and assing it to a state
-    let value=e.target.innerText
+    setDifficultyLevel(e.target.innerText)
     //setting the difficulty level on serverside
-    socket.emit("mode", (mode)=> {
-      setDifficultyLevel(value)
-    })
+    socket.emit("mode", e.target.innerText)
     setIsClicked(true);
    
-
-   
   }
+
+
   const handleLevelMedium= (e) => {
-      //taking the buttons innerText value and assing it to a state
-      let value=e.target.innerText
-      //setting the difficulty level on serverside
-      socket.emit("mode", (mode)=> {
-        setDifficultyLevel(value)
-      })
-      setIsClicked(true);
+     //taking the buttons innerText value and assing it to a state
+     setDifficultyLevel(e.target.innerText)
+     //setting the difficulty level on serverside
+     socket.emit("mode", e.target.innerText)
+     setIsClicked(true);
+    
   }
   const handleLevelHard= (e) => {
   
-          //taking the buttons innerText value and assing it to a state
-          let value=e.target.innerText
-          //setting the difficulty level on serverside
-          socket.emit("mode", (mode)=> {
-            setDifficultyLevel(value)
-          })
-          setIsClicked(true);
-    
-
+    //taking the buttons innerText value and assing it to a state
+    setDifficultyLevel(e.target.innerText)
+    //setting the difficulty level on serverside
+    socket.emit("mode", e.target.innerText)
+    setIsClicked(true);
    
   }
 

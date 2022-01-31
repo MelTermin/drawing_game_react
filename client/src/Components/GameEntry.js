@@ -31,7 +31,7 @@ function GameEntry() {
       if(user.isAdmin) {
         history.push(`/level?drawer=${username}`)
       }else {
-        history.push(`/game?drawer=${players[0].name}&guesser=${username}`)
+        history.push("/game")
       }
     })
     
