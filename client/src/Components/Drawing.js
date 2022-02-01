@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {useHistory} from "react-router-dom"
+import {useHistory,Link} from "react-router-dom"
 import CanvasDraw from "react-canvas-draw";
 import queryString from "query-string";
 import io from "socket.io-client";
@@ -23,9 +23,10 @@ function Drawing({location}) {
     e.preventDefault();
     const getImage=stageRef.current.getDataURL();
     socket.emit("picture", getImage)
+    
     setDrawing(getImage)
     
-    history.push(`/game`)
+    history.push(`/game?word=${word}`)
   }
 
 
@@ -43,10 +44,10 @@ function Drawing({location}) {
                       value={canvas}
                       onChange={(event) => {setBrush(event.target.value);}}/>
               </div>
-              <CanvasDraw className='canvas'  canvasWidth={900} canvasHeight={600} ref={stageRef} brushColor={canvas} image={drawing} />
+              <CanvasDraw className='canvas'  canvasWidth={600} canvasHeight={600} ref={stageRef} brushColor={canvas} image={drawing} />
 
               <button className='btn-send' onClick={() => {stageRef.current.undo();}}>undo</button>
-              <button className='btn-send' onClick={sendDrawingHandler} >Send</button> 
+              <button className='btn-send' onClick={e=>sendDrawingHandler(e)} >Send</button> 
  
             </div>
 

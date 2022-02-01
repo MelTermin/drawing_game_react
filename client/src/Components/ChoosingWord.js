@@ -6,19 +6,27 @@ import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:5002");
 
-function ChoosingWord({difficultyLevel,name,setIsClicked}) {
+function ChoosingWord({difficultyLevel,name}) {
   const history=useHistory();
   const [word, setWord]=useState("");
   const shuffledWords= words.sort(() => Math.random() - 0.5)
 
   const handleWord= (e) => {
-       
-      setWord(e.target.innerText)
+      
+     
+    
       let wordText=e.target.innerText
-      socket.emit("randomWord", e.target.innerText)
+      socket.emit("word",wordText)
       history.push(`/drawing?word=${wordText}`)
        
   }
+
+  console.log(word)
+  
+  // useEffect(() => {
+  //   socket.on("word",setWord)
+  // }, []);
+
   return <div className='word-choosing container'>
           <div>
             <p>{name} you have choosen {difficultyLevel} word as a level</p>

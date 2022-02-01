@@ -19,7 +19,7 @@ const io = new Server(server, {
 let players = [];
 let gameStarted=false;
 let mode=null;
-let randomWord=null;
+let randomWord;
 let image;
 let points=0;
 
@@ -44,10 +44,15 @@ io.on('connection',(socket)=> {
     //console.log(players,"players")
     //sending user and players to the frontend
     callback(players,user)
+  
+  
 
 
 
   });
+
+ 
+
 
   //setting the mode
   socket.on("mode", (data)=> {
@@ -57,10 +62,17 @@ io.on('connection',(socket)=> {
 
   //setting the randomWord
 
-  socket.on("randomWord", (data)=> {
-    randomWord=data
-    //console.log(data,"word server")
-  })
+  // socket.on("word", (data)=> {
+  //   randomWord=data
+  //   console.log(data,"word server")
+ 
+    
+  // })
+  socket.on("word", (word) => {
+    io.emit("word", `${word}`);
+    console.log(`${word}`)
+  });
+
 
   socket.on("picture", (data)=> {
     image=data
@@ -69,7 +81,16 @@ io.on('connection',(socket)=> {
   })
 
   
+  // send chat messages
+  socket.on("message", (message) => {
+    io.emit("message", `${message}`);
+    console.log(`${message}`)
+  });
 
+  //discconet
+
+  
+ 
    
   
 });

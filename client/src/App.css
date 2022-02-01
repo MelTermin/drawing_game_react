@@ -51,7 +51,7 @@ header .brand a {
   justify-content: space-evenly;
 }
 
-input {
+.game-entry-input {
   width: 30%;
   padding: 5px;
   border-radius: 5px;
@@ -195,7 +195,7 @@ input {
 
 .image-container {
   width: 50%;
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--primary);
  margin: 50px 50px; 
   border-radius: 10px;
 }
@@ -204,20 +204,7 @@ input {
   text-align: center;
 }
 
-.form-wrapper {
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  width: 50%;
-  margin: 100px 100px;
-  text-align: center;
-}
+
 
 .guessing-wrapper {
   width: 50%;
@@ -232,19 +219,19 @@ input {
 }
 
 .btn-guess {
-  width: 100%;
-  padding: 10px 15px;
+  width: 20%;
+  padding: 10px 10px;
   background-color: var(--secondary);
   color: var(--primary);
   border-radius: 5px;
   text-transform: uppercase;
   font-weight: 700;
-  display: inline-block;
+ 
   border: none;
   font-size: 1rem;
   transition: all 0.3s ease;
   line-height: 1.1;
-  margin-top: 40px;
+  
 }
 
 .btn-guess:hover {
@@ -252,3 +239,88 @@ input {
   opacity: 1;
   cursor: pointer;
 }
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+ margin:20px 100px;
+}
+
+.chatbox-input {
+  width: 200px;
+  border: 2px solid  var(--primary);
+  border-radius: 5px;
+}
+
+.chat {
+  width: 300px;
+  height: 600px;
+  box-shadow: 1px 1px 3px 3px black;
+  border-radius: 5px;
+  background-color: var(--primary);
+  margin-bottom: 20px;
+  padding: 7px;
+}
+
+.chat li {
+  list-style-type: none;
+  color:white;
+}
+
+.form-wrapper {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+
+@media screen and (max-width: 768px)  {
+  .loader {
+
+    margin-top: 100px;
+    margin-left: 300px;
+
+  }
+
+   
+  .level-container {
+    width: 500px;
+    margin: 200px 130px;
+
+  }
+
+  .word {
+    margin-top: 20px;
+ 
+  }
+
+  .palette-div input {
+    margin-left: 290px;
+
+  }
+ .canvas{
+   margin-left: 100px;
+ }
+
+ .game-container {
+  border: 2px solid fuchsia;
+ 
+    /* border: 2px solid fuchsia; */
+    display:flex;
+    min-height: 100vh;
+    width: 100%;
+
+
+}
+
+.game-views {
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  border: 2px solid orangered;
+}
+
+}
+

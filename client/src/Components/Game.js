@@ -1,18 +1,26 @@
 import React,{useEffect,useState} from 'react';
 import io from "socket.io-client";
-import CanvasDraw from "react-canvas-draw";
-
-
+import {useHistory} from "react-router-dom"
+import queryString from "query-string";
+import Closing from './Closing';
 
 const socket = io.connect("http://localhost:5002");
 
 
-function Game() {
 
+function Game({location}) {
+
+  
+  const {word:queryWord} = queryString.parse(location.search);
+  console.log(queryWord,"query")
  
   const[image,setImage]=useState("")
-  const [guessedWord, setGuessedWord]=useState("")
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  const [word,setWord]=useState(queryWord || "" )
+  const [isFinished,setIsFinished]=useState("");
 
+  const history=useHistory();
 
 
 
@@ -20,20 +28,51 @@ function Game() {
       
     //adding event listerners with socket.on, useEffect create event listeners
     socket.on("picture",setImage)
+    
     return ()=> {
       //remove event listeners when components remounts I will not have more than one
       //specifiying the function name is setImage1 and event is picture//
       socket.off("picture", setImage)
+    
     }
    
     }, []);
 
+
+
+    useEffect(() => {
+      socket.on("word", (word)=>{
+      console.log(word)
+      setWord(word)
+      })
+    }, []);
+ 
+     
+  
+    useEffect(() => {
+      socket.on("message", (message) => {
+        setMessageList((list) => [...list, message]);
+      });
+    }, []);
+
+    //console.log(messageList)
+
     const submitHandler= (e) => {
       e.preventDefault();
-      console.log(guessedWord,"guessedword from client")
-      // if(guessedWord===)
-    
+      socket.emit("message",currentMessage)
+      setCurrentMessage("")
+
+      
+      if(currentMessage==word || currentMessage==queryWord) {
+           history.push("/")  
+      }  
+
     }
+
+    const homePage =()=>{
+      history.push("/")
+    }
+  
 
 
 
@@ -45,8 +84,10 @@ function Game() {
                 <p className='waiting-text'>Waiting for drawer to send the picture</p>
                 <p className='waiting-text'>Thank you for your patience</p>
                 <div className='loader'></div>
-              </div>):(            
-              <div className='game-views' >
+              </div>):( 
+                   <>  
+                             
+                <div className='game-views' >
                   <div className='image-container'>
                     <div className='title'>   
                        <h2>Here is Drawer's Picture</h2>
@@ -54,15 +95,24 @@ function Game() {
                     <img src={image}></img>
                   </div>
                   
-                  <div className='guessing-wrapper'>
-                    <form className='form-wrapper' onSubmit={submitHandler}>
-                      <h2>Please guess the word</h2>
-                      <input className='guessing-input' placeholder='Please type your guess' type="text" value={guessedWord} onChange={(e)=>setGuessedWord(e.target.value)}/>
-                      <button className='btn-guess'>Send</button>
+                  <div className="chatContainer">
+                    <h2>ChatBox</h2>
+                    <div className="chat">
+                        {messageList.map((msg, i) => (
+                          <li key={i}>- {msg}</li>
+                        ))}
+                    </div>
+                    <form className='form-wrapper'  onSubmit={submitHandler}>
+                     
+                      <input className='chatbox-input' placeholder='Please type your guess' autoComplete="off" type="text" value={currentMessage} onChange={(event) => {
+                      setCurrentMessage(event.target.value); }}/>
+                      <button className='btn-guess' >Send</button>
+                      <button onClick={homePage} className='btn-guess' >Go to home Page</button>
+                     
                     </form>
                   </div>
-              </div>)
-              }
+              </div>
+              </> )}
 
            
 

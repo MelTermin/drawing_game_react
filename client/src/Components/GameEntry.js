@@ -45,7 +45,7 @@ function GameEntry() {
           <form onSubmit={joinGame} >
           <p className='welcome-text'>Welcome to Draw & Guess Game</p>
           <div className='input-container'>
-            <input type="text" placeholder='Please type your username' name="username" value= {username} onChange= {(e)=>setUserName(e.target.value)}/>
+            <input className='game-entry-input' type="text" placeholder='Please type your username' name="username" value= {username} onChange= {(e)=>setUserName(e.target.value)}/>
             <button className='btn' >Start the Game</button>
           </div>
 
