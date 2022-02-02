@@ -1,7 +1,7 @@
 import React from 'react';
 import {useHistory} from "react-router-dom"
 
-function GameOver({word}) {
+function GameOver() {
   const history=useHistory();
 
   const  handleRestart = () =>  {
@@ -9,7 +9,7 @@ function GameOver({word}) {
   }
   return <div className='game-over'>
                 <p>   You have finished the game
-                you guesed the {word}</p>
+                you guessed the word correctly</p>
             
                 <button className='btn' onClick= {
                   handleRestart
