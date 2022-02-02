@@ -116,7 +116,7 @@ function Game({location}) {
                      
                     </form>
                   </div>
-              </div>  ) :(<GameOver word= {word}></GameOver>)}  
+              </div>  ) :(<GameOver></GameOver>)}  
        
  
               </> )}
