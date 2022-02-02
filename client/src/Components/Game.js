@@ -2,7 +2,8 @@ import React,{useEffect,useState} from 'react';
 import io from "socket.io-client";
 import {useHistory} from "react-router-dom"
 import queryString from "query-string";
-import Closing from './Closing';
+import GameOver from './GameOver';
+
 
 const socket = io.connect("http://localhost:5002");
 
@@ -18,7 +19,8 @@ function Game({location}) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [word,setWord]=useState(queryWord || "" )
-  const [isFinished,setIsFinished]=useState("");
+  const [isFinished,setIsFinished]=useState(false);
+  
 
   const history=useHistory();
 
@@ -46,8 +48,13 @@ function Game({location}) {
       setWord(word)
       })
     }, []);
- 
-     
+    
+    useEffect(() => {
+      socket.on("welcome", (message) => {
+        setMessageList((list) => [...list, message]);
+      });
+    }, []);
+
   
     useEffect(() => {
       socket.on("message", (message) => {
@@ -55,7 +62,7 @@ function Game({location}) {
       });
     }, []);
 
-    //console.log(messageList)
+  
 
     const submitHandler= (e) => {
       e.preventDefault();
@@ -63,17 +70,16 @@ function Game({location}) {
       setCurrentMessage("")
 
       
-      if(currentMessage==word || currentMessage==queryWord) {
-           history.push("/")  
-      }  
+      if(currentMessage===word || currentMessage===queryWord) {
+          history.push("/gameover")
+           setIsFinished(true) 
+      } 
 
     }
 
     const homePage =()=>{
       history.push("/")
     }
-  
-
 
 
 
@@ -85,33 +91,34 @@ function Game({location}) {
                 <p className='waiting-text'>Thank you for your patience</p>
                 <div className='loader'></div>
               </div>):( 
-                   <>  
-                             
-                <div className='game-views' >
+                   <>
+                {!isFinished ? (                <div className='game-views' >
                   <div className='image-container'>
                     <div className='title'>   
                        <h2>Here is Drawer's Picture</h2>
                     </div>
-                    <img src={image}></img>
+                    <img alt="" src={image}></img>
                   </div>
                   
                   <div className="chatContainer">
                     <h2>ChatBox</h2>
                     <div className="chat">
                         {messageList.map((msg, i) => (
-                          <li key={i}>- {msg}</li>
+                          <li key={i}> {msg}</li>
                         ))}
                     </div>
                     <form className='form-wrapper'  onSubmit={submitHandler}>
                      
-                      <input className='chatbox-input' placeholder='Please type your guess' autoComplete="off" type="text" value={currentMessage} onChange={(event) => {
+                      <input className='chatbox-input' placeholder='Please type your guesses in capital letters' autoComplete="off" type="text" value={currentMessage} onChange={(event) => {
                       setCurrentMessage(event.target.value); }}/>
                       <button className='btn-guess' >Send</button>
                       <button onClick={homePage} className='btn-guess' >Go to home Page</button>
                      
                     </form>
                   </div>
-              </div>
+              </div>  ) :(<GameOver word= {word}></GameOver>)}  
+       
+ 
               </> )}
 
            

@@ -44,39 +44,27 @@ io.on('connection',(socket)=> {
     //console.log(players,"players")
     //sending user and players to the frontend
     callback(players,user)
-  
-  
-
-
+    
+    socket.broadcast.emit("welcome", `${username} is the guesser.`)
+    
 
   });
 
- 
 
 
   //setting the mode
   socket.on("mode", (data)=> {
     mode=data
-    //console.log(data,"mode server")
   })
 
-  //setting the randomWord
-
-  // socket.on("word", (data)=> {
-  //   randomWord=data
-  //   console.log(data,"word server")
  
-    
-  // })
   socket.on("word", (word) => {
     io.emit("word", `${word}`);
-    console.log(`${word}`)
   });
 
 
   socket.on("picture", (data)=> {
     image=data
-    //console.log(data,"image server")
     socket.broadcast.emit("picture", image)
   })
 
@@ -84,22 +72,10 @@ io.on('connection',(socket)=> {
   // send chat messages
   socket.on("message", (message) => {
     io.emit("message", `${message}`);
-    console.log(`${message}`)
   });
-
-  //discconet
-
-  
  
-   
-  
 });
   
-
-
-
-
-
 
 server.listen(5002,()=> {
   console.log("the server is running on port 5002")
